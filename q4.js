@@ -1,0 +1,1 @@
+db.employees.find({ department: "IT" })
