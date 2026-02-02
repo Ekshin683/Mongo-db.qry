@@ -1,2 +1,3 @@
 // db.employees.find({ department: "HR" })
-db.employees.find({ salary: "3000"})
+// db.employees.find({ department: {$eq: "HR"} }) // $eq for equal to
+db.employees.find({ salary: {$eq: 3000} })
