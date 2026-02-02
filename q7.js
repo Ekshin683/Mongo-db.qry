@@ -23,6 +23,8 @@ db.employees.updateMany(
         $inc:{salary: 1000} //update salary for everyone
     }
 )
+//increase multiply at same time
+db.employees.updateMany({email:{$eq: ["cathy@gmail.com","mike@gmail.com"]}},{$inc:{salary: 1000}})
 
 db.employees.updateMany(
     {
