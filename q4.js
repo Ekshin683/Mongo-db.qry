@@ -10,4 +10,5 @@
 // db.employees.find().sort()
 // db.employees.find().sort({name:1}) //ascending order
 // db.employees.find().sort({name:-1}) //descending order
-db.employees.find().limit(3).skip(1).sort({name:-1})
+// db.employees.find().limit(3).skip(1).sort({name:-1})
+db.employees.find().count() // total documents
