@@ -14,3 +14,10 @@ db.employees.find(
 
 db.employees.getIndexes() //to see all indexes in collection
 
+db.employees.dropIndex("email_1") //to delete index
+db.employees.find({}, {_id:0, name:1})
+
+db.employees.find({}, {_id:0, name:1}).sort({name:1}) //sort by name ascending
+
+db.employees.find({},{_id:0,name:1}).collation({locale:'en',strength:2}).sort({name:1}) //case insensitive sort
+
