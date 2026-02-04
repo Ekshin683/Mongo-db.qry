@@ -41,11 +41,11 @@ db.employees.aggregate([
             $switch:{
                 branches:[
                     {
-                        case:{$gte:["$salary",7000]},
+                        case:{$gt:["$salary",7000]},
                         then:"Grade A"
                     },
                     {
-                        case:{$gte:["$salary",4000]},
+                        case:{$gt:["$salary",4000]},
                         then:"Grade B"
                     }
                 ],
@@ -54,3 +54,4 @@ db.employees.aggregate([
     }
     }}
 ])
+

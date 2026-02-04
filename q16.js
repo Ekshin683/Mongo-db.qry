@@ -1,0 +1,117 @@
+db.orders.insertOne(
+    {
+        empid:ObjectId('69803a806b41cc6fa8628ca0'),
+        products:"Laptop",
+        price:55000,
+        quantity:1
+    }
+)
+
+db.orders.insertMany([
+    {
+        empid:ObjectId('69803a806b41cc6fa8628ca0'),
+        products:"Mouse",
+        price:100,
+        quantity:1
+    },
+    {
+        empid:ObjectId('69803a806b41cc6fa8628ca2'),
+        products:"KeyBoard",
+        price:2000,
+        quantity:1
+    },
+    {
+        empid:ObjectId('69803a806b41cc6fa8628ca3'),
+        products:"Monitor",
+        price:15000,
+        quantity:1
+    }
+])
+
+
+db.orders.aggregate([
+    {$project:{
+        _id:0,
+        products:1,
+        price:1
+    }}
+])
+
+//joins
+db.orders.aggregate([
+    {$lookup:{
+        from:"employees",
+        localField:"empid",
+        foreignField:"_id",
+        as:"users"
+    }}
+])
+//connect from employees to orders
+db.employees.aggregate([
+    {$lookup:{
+        from:"orders",
+        localField:"_id",
+        foreignField:"empid",
+        as:"orderdetails"
+    }}
+])
+//type 1: without pipeline+
+db.employees.aggregate([
+    {$lookup:{
+        from:"orders",
+        localField:"_id",
+        foreignField:"empid",
+        as:"orderdetails"
+    }},
+    {$unwind:"$orderdetails"},  
+    {$project:{
+        _id:1,
+        name:1,
+        products:"$orderdetails.products",
+        price:"$orderdetails.price"
+    }}
+])
+//type2: with pipeline
+db.employees.aggregate([
+    {$lookup:{
+        from:"orders",
+        let:{uid:"$_id"},
+        pipeline:[{
+            $match:{
+                $expr:{
+                    $eq:["$empid","$$uid"]
+                }
+            }
+        }
+        ],
+        as:"orderdetails"
+    }},
+    {$unwind:"$orderdetails"},
+    {$project:{
+        name:1,
+        products:"$orderdetails.products",
+        price:"$orderdetails.price"
+    }}
+])
+
+db.employees.aggregate([
+    {$lookup:{
+        from:"orders",
+        let:{uid:"$_id"},
+        pipeline:[{
+            $match:{
+                $expr:{
+                    $eq:["$empid","$$uid"]
+                }
+            }
+        },
+        {$project:{
+        _id:0,
+        empid:1,
+        products:1,
+        price:1,
+    }}
+        ],
+        as:"orderdetails"
+    }},
+])
