@@ -164,3 +164,25 @@ db.employees.aggregate([
     }
 }
 ])
+
+//left outer join example
+db.employees.aggregate([
+    {$lookup:{
+        from:"orders",
+        localField:"_id",
+        foreignField:"empid",
+
+        as:"orderdetails"
+    }},
+    {$lookup:{
+        from:"details",
+        localField:"_id",
+
+        foreignField:"empid",
+        as:"addressdetails"
+    }},
+    {$match:{
+        orderdetails:{$size:0}
+    }}
+])
+//explanation of left outer join:
