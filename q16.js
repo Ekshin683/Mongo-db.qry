@@ -48,7 +48,7 @@ db.orders.aggregate([
 ])
 //connect from employees to orders
 db.employees.aggregate([
-    {$lookup:{
+    {$lookup:{ //lookup: stage to perform left outer join
         from:"orders",
         localField:"_id",
         foreignField:"empid",
@@ -114,4 +114,53 @@ db.employees.aggregate([
         ],
         as:"orderdetails"
     }},
+])
+
+
+//practice joins
+
+db.details.insertMany([
+    {
+        empid: ObjectId('69803a806b41cc6fa8628ca0'),
+        address:{
+            city:"Tirupati",
+            state:"Andhra Pradesh"
+        }
+    },
+    {
+        empid:  ObjectId('69803a806b41cc6fa8628ca0'),
+        address:{
+            city:"Hyderabad",
+            state:"Telangana"
+        }
+    },
+    {
+        empid: ObjectId('69803a806b41cc6fa8628ca2'),
+        address:{
+            city:"Bangalore",
+            state:"Karnataka"
+        }
+    },
+    {
+        empid: ObjectId('69803a806b41cc6fa8628ca3'),
+        address:{
+            city:"Chennai",
+            state:"Tamil Nadu"
+        }
+    }
+])
+db.employees.aggregate([
+    {$lookup:{
+        from:"orders",
+        localField:"_id",
+        foreignField:"empid",
+        as:"orderdetails"  
+    }},
+    {$lookup:{
+        from:"details",
+        localField:"_id",
+        foreignField:"empid",
+        as:"addressdetails"
+    }
+}
 ])
