@@ -1,3 +1,3 @@
 db.employees.find({
-    name:{$regex:""}
+    name:{$regex:""} //
 })

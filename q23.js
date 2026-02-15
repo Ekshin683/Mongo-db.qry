@@ -10,9 +10,9 @@
 rs.initiate({
     _id:"rs1",
     members:[
-        {_id:0,host:"127.0.0.1:27025"},
-        {_id:1,host:"127.0.0.1:27026"},
-        {_id:2,host:"127.0.0.1:27027"}
+        {_id:0,host:"127.0.0.1:27018"},
+        {_id:1,host:"127.0.0.1:27019"},
+        {_id:2,host:"127.0.0.1:27020"}
     ]
 })
 
@@ -22,4 +22,4 @@ rs.initiate({
 //db.users.insertOne({name:"Ekshindeep",age:21})
 
 //mongosh --port 27019
-//db.getMongo().setReadPref("secondary")
+//db.getMongo().setReadPref("secondary") => if unable to read from secondary then it will read from primary

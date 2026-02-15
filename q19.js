@@ -1,4 +1,4 @@
-db.createView("orderview","employees",[
+db.createView("orderview","employees",[ //create view named orderview on employees collection
     {$lookup:{
         from:"orders",
         localField:"_id",
